@@ -12,3 +12,9 @@ var draw = function () {
     gameBoardContext.strokeRect(400, 100, 20, 100);
     gameBoardContext.arc(250, 100, 50, 0, 2 * Math.PI);
 };
+var changeDirection = function (e) {
+    var UP_KEY = 38;
+    var DOWN_KEY = 40;
+    var W_KEY = 87;
+    var S_KEY = 83;
+};
