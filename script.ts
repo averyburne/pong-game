@@ -9,7 +9,6 @@ let rightBlock = [400, 100, 20, 100]
 let leftBlock = [100, 100, 20, 100]
 
 const draw = () => {
-    console.log('drawing')
     gameBoardContext.fillStyle = 'lightblue'
     gameBoardContext.strokeStyle = 'darkblue'
     gameBoardContext.fillRect(...leftBlock)
@@ -38,8 +37,17 @@ const changeDirection = (e) => {
 
     const keyPressed = e.keyCode
 
-    if (keyPressed === UP_KEY) {
+    if (keyPressed === UP_KEY && rightBlock[1] > 0) {
         rightBlock[1] -= 20;
+    }
+    if (keyPressed === DOWN_KEY && rightBlock[1] > 300) {
+        rightBlock[1] += 20;
+    }
+    if (keyPressed === W_KEY && leftBlock[1] > 0) {
+        leftBlock[1] -= 20;
+    }
+    if (keyPressed === S_KEY && leftBlock[1] > 300) {
+        leftBlock[1] += 20;
     }
     clearCanvas();
     draw();

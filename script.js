@@ -7,7 +7,6 @@ var boardBorder = 'black';
 var rightBlock = [400, 100, 20, 100];
 var leftBlock = [100, 100, 20, 100];
 var draw = function () {
-    console.log('drawing');
     gameBoardContext.fillStyle = 'lightblue';
     gameBoardContext.strokeStyle = 'darkblue';
     gameBoardContext.fillRect.apply(gameBoardContext, leftBlock);
@@ -31,8 +30,17 @@ var changeDirection = function (e) {
     var W_KEY = 87;
     var S_KEY = 83;
     var keyPressed = e.keyCode;
-    if (keyPressed === UP_KEY) {
+    if (keyPressed === UP_KEY && rightBlock[1] > 0) {
         rightBlock[1] -= 20;
+    }
+    if (keyPressed === DOWN_KEY && rightBlock[1] > 300) {
+        rightBlock[1] += 20;
+    }
+    if (keyPressed === W_KEY && leftBlock[1] > 0) {
+        leftBlock[1] -= 20;
+    }
+    if (keyPressed === S_KEY && leftBlock[1] > 300) {
+        leftBlock[1] += 20;
     }
     clearCanvas();
     draw();
