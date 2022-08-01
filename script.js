@@ -6,15 +6,19 @@ var boardBackground = 'white';
 var boardBorder = 'black';
 var rightBlock = [400, 100, 20, 100];
 var leftBlock = [100, 100, 20, 100];
-var draw = function () {
-    gameBoardContext.fillStyle = 'lightblue';
-    gameBoardContext.strokeStyle = 'darkblue';
-    gameBoardContext.fillRect.apply(gameBoardContext, leftBlock);
-    gameBoardContext.strokeRect.apply(gameBoardContext, leftBlock);
-    gameBoardContext.fillRect.apply(gameBoardContext, rightBlock);
-    gameBoardContext.strokeRect.apply(gameBoardContext, rightBlock);
-    gameBoardContext.arc(250, 100, 50, 0, 2 * Math.PI);
-};
+var ballX = 250;
+var ballY = 100;
+var dy = 0;
+var dx = 10;
+function main() {
+    setTimeout(function () {
+        clearCanvas();
+        ballX += dx;
+        ballY += dy;
+        draw();
+        main();
+    }, 200);
+}
 var clearCanvas = function () {
     gameBoardContext.fillStyle = boardBackground;
     //  Select the colour for the border of the canvas
@@ -24,25 +28,39 @@ var clearCanvas = function () {
     // Draw a "border" around the entire canvas
     gameBoardContext.strokeRect(0, 0, gameBoard.width, gameBoard.height);
 };
+var draw = function () {
+    gameBoardContext.fillStyle = 'lightblue';
+    gameBoardContext.strokeStyle = 'darkblue';
+    gameBoardContext.fillRect.apply(gameBoardContext, leftBlock);
+    gameBoardContext.strokeRect.apply(gameBoardContext, leftBlock);
+    gameBoardContext.fillRect.apply(gameBoardContext, rightBlock);
+    gameBoardContext.strokeRect.apply(gameBoardContext, rightBlock);
+    gameBoardContext.beginPath();
+    gameBoardContext.arc(ballX, ballY, 15, 0, 2 * Math.PI);
+    gameBoardContext.stroke();
+};
 var changeDirection = function (e) {
     var UP_KEY = 38;
     var DOWN_KEY = 40;
     var W_KEY = 87;
     var S_KEY = 83;
     var keyPressed = e.keyCode;
+    console.log(gameBoardContext);
     if (keyPressed === UP_KEY && rightBlock[1] > 0) {
         rightBlock[1] -= 20;
     }
-    if (keyPressed === DOWN_KEY && rightBlock[1] > 300) {
+    else if (keyPressed === DOWN_KEY && rightBlock[1] < 300) {
         rightBlock[1] += 20;
     }
-    if (keyPressed === W_KEY && leftBlock[1] > 0) {
+    else if (keyPressed === W_KEY && leftBlock[1] > 0) {
         leftBlock[1] -= 20;
     }
-    if (keyPressed === S_KEY && leftBlock[1] > 300) {
+    else if (keyPressed === S_KEY && leftBlock[1] < 300) {
         leftBlock[1] += 20;
     }
     clearCanvas();
     draw();
+};
+var checkIfBounced = function () {
 };
 document.addEventListener("keydown", changeDirection);
