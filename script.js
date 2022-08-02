@@ -8,11 +8,13 @@ var rightBlock = [400, 100, 20, 100];
 var leftBlock = [100, 100, 20, 100];
 var ballX = 250;
 var ballY = 100;
+var ballRadius = 15;
 var dy = 0;
 var dx = 10;
 function main() {
     setTimeout(function () {
         clearCanvas();
+        checkIfBounced();
         ballX += dx;
         ballY += dy;
         draw();
@@ -36,7 +38,7 @@ var draw = function () {
     gameBoardContext.fillRect.apply(gameBoardContext, rightBlock);
     gameBoardContext.strokeRect.apply(gameBoardContext, rightBlock);
     gameBoardContext.beginPath();
-    gameBoardContext.arc(ballX, ballY, 15, 0, 2 * Math.PI);
+    gameBoardContext.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
     gameBoardContext.stroke();
 };
 var changeDirection = function (e) {
@@ -62,5 +64,8 @@ var changeDirection = function (e) {
     draw();
 };
 var checkIfBounced = function () {
+    if ((ballX + ballRadius) >= rightBlock[0]) {
+        dx = -1 * dx;
+    }
 };
 document.addEventListener("keydown", changeDirection);

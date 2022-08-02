@@ -5,16 +5,18 @@ const gameBoardContext = gameBoard.getContext('2d')
 const boardBackground = 'white'
 const boardBorder = 'black'
 
-let rightBlock = [400, 100, 20, 100]
-let leftBlock = [100, 100, 20, 100]
-let ballX = 250
-let ballY = 100
-let dy = 0
-let dx = 10
+let rightBlock: number[] = [400, 100, 20, 100]
+let leftBlock: number[]  = [100, 100, 20, 100]
+let ballX: number = 250
+let ballY: number = 100
+let ballRadius: number = 15
+let dy: number = 0
+let dx: number = 10
 
-function main() {
+function main(): void {
     setTimeout(() => {
         clearCanvas()
+        checkIfBounced()
         ballX += dx
         ballY += dy
         draw()
@@ -22,7 +24,7 @@ function main() {
     }, 200)
 }
 
-const clearCanvas = () => {
+const clearCanvas = (): void => {
     gameBoardContext.fillStyle = boardBackground;
     //  Select the colour for the border of the canvas
     gameBoardContext.strokestyle = boardBorder;
@@ -32,7 +34,7 @@ const clearCanvas = () => {
     gameBoardContext.strokeRect(0, 0, gameBoard.width, gameBoard.height);
 }
 
-const draw = () => {
+const draw = ():void => {
     gameBoardContext.fillStyle = 'lightblue'
     gameBoardContext.strokeStyle = 'darkblue'
     gameBoardContext.fillRect(...leftBlock)
@@ -41,11 +43,11 @@ const draw = () => {
     gameBoardContext.fillRect(...rightBlock)
     gameBoardContext.strokeRect(...rightBlock);
     gameBoardContext.beginPath()
-    gameBoardContext.arc(ballX, ballY, 15, 0, 2 * Math.PI)
+    gameBoardContext.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI)
     gameBoardContext.stroke()
 }
 
-const changeDirection = (e) => {
+const changeDirection = (e): void => {
     const UP_KEY = 38;
     const DOWN_KEY = 40;
     const W_KEY = 87;
@@ -70,7 +72,9 @@ const changeDirection = (e) => {
 }
 
 const checkIfBounced = () => {
-    
+    if ((ballX + ballRadius) >= rightBlock[0]) {
+        dx = -1*dx 
+    }
 }
 
 document.addEventListener("keydown", changeDirection)
