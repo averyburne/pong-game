@@ -11,7 +11,7 @@ let ballX: number = 250
 let ballY: number = 100
 let ballRadius: number = 15
 let dy: number = 0
-let dx: number = 10
+let dx: number = 3
 
 let scores = {
     leftPlayerScore: 0,
@@ -27,7 +27,7 @@ function main(): void {
         ballY += dy
         draw()
         main()
-    }, 200)
+    }, 20)
 }
 
 const clearCanvas = (): void => {
@@ -98,12 +98,35 @@ const checkIfHitRightBlock = (): boolean => {
     }
 }
 
+const checkIfHitWall = (): boolean => {
+    if (((ballY - ballRadius) < 1) || ((ballY + ballRadius) > 400)) {
+        return true
+    } else {
+        return false
+    }
+}
+
 const checkIfBounced = (): void => {
     if (checkIfHitRightBlock()) {
-        dx = -1*dx 
+        dx = -1*dx
+        if (Math.floor(Math.random())) {
+            dy += Math.floor(Math.random() * 3)
+        }
+        else {
+            dy -= Math.floor(Math.random() * 3)
+        }
     } else if (checkIfHitLeftBlock()) {
         dx = -1*dx
+        if (Math.floor(Math.random())) {
+            dy += Math.floor(Math.random() * 3)
+        }
+        else {
+            dy -= Math.floor(Math.random() * 3)
+        }
+    } else if (checkIfHitWall()) {
+        dy = -1*dy
     }
+
 }
 
 const updateScore = side => {
@@ -118,9 +141,13 @@ const checkIfScored = (): void => {
     if ((ballX - ballRadius) <= 0) {
         scores.leftPlayerScore++
         updateScore('left')
+        ballX = 250
+        dx = -1*dx
     } else if ((ballX + ballRadius) >= 600) {
         scores.rightPlayerScore++
         updateScore('right')
+        ballX = 250
+        dx = -1*dx
     }
 }
 

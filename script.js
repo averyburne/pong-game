@@ -10,7 +10,7 @@ var ballX = 250;
 var ballY = 100;
 var ballRadius = 15;
 var dy = 0;
-var dx = 10;
+var dx = 3;
 var scores = {
     leftPlayerScore: 0,
     rightPlayerScore: 0
@@ -24,7 +24,7 @@ function main() {
         ballY += dy;
         draw();
         main();
-    }, 200);
+    }, 20);
 }
 var clearCanvas = function () {
     gameBoardContext.fillStyle = boardBackground;
@@ -85,12 +85,35 @@ var checkIfHitRightBlock = function () {
         return false;
     }
 };
+var checkIfHitWall = function () {
+    if (((ballY - ballRadius) < 1) || ((ballY + ballRadius) > 400)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+};
 var checkIfBounced = function () {
     if (checkIfHitRightBlock()) {
         dx = -1 * dx;
+        if (Math.floor(Math.random())) {
+            dy += Math.floor(Math.random() * 3);
+        }
+        else {
+            dy -= Math.floor(Math.random() * 3);
+        }
     }
     else if (checkIfHitLeftBlock()) {
         dx = -1 * dx;
+        if (Math.floor(Math.random())) {
+            dy += Math.floor(Math.random() * 3);
+        }
+        else {
+            dy -= Math.floor(Math.random() * 3);
+        }
+    }
+    else if (checkIfHitWall()) {
+        dy = -1 * dy;
     }
 };
 var updateScore = function (side) {
@@ -105,10 +128,14 @@ var checkIfScored = function () {
     if ((ballX - ballRadius) <= 0) {
         scores.leftPlayerScore++;
         updateScore('left');
+        ballX = 250;
+        dx = -1 * dx;
     }
     else if ((ballX + ballRadius) >= 600) {
         scores.rightPlayerScore++;
         updateScore('right');
+        ballX = 250;
+        dx = -1 * dx;
     }
 };
 document.addEventListener("keydown", changeDirection);
