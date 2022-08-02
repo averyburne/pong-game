@@ -64,7 +64,10 @@ var changeDirection = function (e) {
     draw();
 };
 var checkIfBounced = function () {
-    if ((ballX + ballRadius) >= rightBlock[0]) {
+    if ((ballX + ballRadius) >= rightBlock[0] && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
+        dx = -1 * dx;
+    }
+    else if ((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
         dx = -1 * dx;
     }
 };

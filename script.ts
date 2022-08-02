@@ -54,7 +54,6 @@ const changeDirection = (e): void => {
     const S_KEY = 83;
 
     const keyPressed = e.keyCode
-    console.log(gameBoardContext)
     if (keyPressed === UP_KEY && rightBlock[1] > 0) {
         rightBlock[1] -= 20;
     }
@@ -71,9 +70,13 @@ const changeDirection = (e): void => {
     draw();
 }
 
+
+
 const checkIfBounced = () => {
-    if ((ballX + ballRadius) >= rightBlock[0]) {
+    if ((ballX + ballRadius) >= rightBlock[0] && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
         dx = -1*dx 
+    } else if ((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
+        dx = -1*dx
     }
 }
 
