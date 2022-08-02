@@ -70,12 +70,32 @@ const changeDirection = (e): void => {
     draw();
 }
 
+const checkIfHitLeftBlock = (): boolean => {
+    if (
+        ((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && (ballX -      ballRadius) >= (leftBlock[0]))
+        && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) <       (leftBlock[1] + 100))
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
 
+const checkIfHitRightBlock = (): boolean => {
+    if (
+        (((ballX + ballRadius) >= rightBlock[0]) && ((ballX + ballRadius)       <= (rightBlock[0] + rightBlock[2])))
+        && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) <         (rightBlock[1] + 100))) {
+            return true
+        }
+    else {
+        return false
+    }
+}
 
 const checkIfBounced = () => {
-    if ((ballX + ballRadius) >= rightBlock[0] && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
+    if (checkIfHitRightBlock()) {
         dx = -1*dx 
-    } else if ((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
+    } else if (checkIfHitLeftBlock()) {
         dx = -1*dx
     }
 }

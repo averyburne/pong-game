@@ -47,7 +47,6 @@ var changeDirection = function (e) {
     var W_KEY = 87;
     var S_KEY = 83;
     var keyPressed = e.keyCode;
-    console.log(gameBoardContext);
     if (keyPressed === UP_KEY && rightBlock[1] > 0) {
         rightBlock[1] -= 20;
     }
@@ -63,11 +62,29 @@ var changeDirection = function (e) {
     clearCanvas();
     draw();
 };
+var checkIfHitLeftBlock = function () {
+    if (((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && (ballX - ballRadius) >= (leftBlock[0]))
+        && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+var checkIfHitRightBlock = function () {
+    if ((((ballX + ballRadius) >= rightBlock[0]) && ((ballX + ballRadius) <= (rightBlock[0] + rightBlock[2])))
+        && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
+        return true;
+    }
+    else {
+        return false;
+    }
+};
 var checkIfBounced = function () {
-    if ((ballX + ballRadius) >= rightBlock[0] && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
+    if (checkIfHitRightBlock()) {
         dx = -1 * dx;
     }
-    else if ((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
+    else if (checkIfHitLeftBlock()) {
         dx = -1 * dx;
     }
 };
