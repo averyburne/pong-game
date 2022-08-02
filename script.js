@@ -11,10 +11,15 @@ var ballY = 100;
 var ballRadius = 15;
 var dy = 0;
 var dx = 10;
+var scores = {
+    leftPlayerScore: 0,
+    rightPlayerScore: 0
+};
 function main() {
     setTimeout(function () {
         clearCanvas();
         checkIfBounced();
+        checkIfScored();
         ballX += dx;
         ballY += dy;
         draw();
@@ -86,6 +91,24 @@ var checkIfBounced = function () {
     }
     else if (checkIfHitLeftBlock()) {
         dx = -1 * dx;
+    }
+};
+var updateScore = function (side) {
+    if (side === 'left') {
+        document.getElementById('left-player-score').innerText = scores.leftPlayerScore.toString();
+    }
+    else if (side === 'right') {
+        document.getElementById('right-player-score').innerText = scores.rightPlayerScore.toString();
+    }
+};
+var checkIfScored = function () {
+    if ((ballX - ballRadius) <= 0) {
+        scores.leftPlayerScore++;
+        updateScore('left');
+    }
+    else if ((ballX + ballRadius) >= 600) {
+        scores.rightPlayerScore++;
+        updateScore('right');
     }
 };
 document.addEventListener("keydown", changeDirection);
