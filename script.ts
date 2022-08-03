@@ -2,8 +2,8 @@ export {}
 
 let gameBoard: any = document.getElementById("game-canvas")
 const gameBoardContext = gameBoard.getContext('2d')
-const boardBackground = 'white'
-const boardBorder = 'black'
+const boardBackground: string = 'white'
+const boardBorder: string = 'black'
 
 let rightBlock: number[] = [400, 100, 20, 100]
 let leftBlock: number[]  = [100, 100, 20, 100]
@@ -143,11 +143,13 @@ const checkIfScored = (): void => {
         updateScore('left')
         ballX = 250
         dx = -1*dx
+        dy = 0
     } else if ((ballX + ballRadius) >= 600) {
         scores.rightPlayerScore++
         updateScore('right')
         ballX = 250
         dx = -1*dx
+        dy = 0
     }
 }
 

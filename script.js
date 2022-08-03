@@ -130,12 +130,14 @@ var checkIfScored = function () {
         updateScore('left');
         ballX = 250;
         dx = -1 * dx;
+        dy = 0;
     }
     else if ((ballX + ballRadius) >= 600) {
         scores.rightPlayerScore++;
         updateScore('right');
         ballX = 250;
         dx = -1 * dx;
+        dy = 0;
     }
 };
 document.addEventListener("keydown", changeDirection);
