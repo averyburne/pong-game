@@ -4,13 +4,25 @@ var gameBoard = document.getElementById("game-canvas");
 var gameBoardContext = gameBoard.getContext('2d');
 var boardBackground = 'white';
 var boardBorder = 'black';
-var rightBlock = [400, 100, 20, 100];
-var leftBlock = [100, 100, 20, 100];
-var ballX = 250;
-var ballY = 100;
-var ballRadius = 15;
-var dy = 0;
-var dx = 3;
+var leftBlock = {
+    x: 100,
+    y: 100,
+    width: 20,
+    height: 100
+};
+var rightBlock = {
+    x: 400,
+    y: 100,
+    width: 20,
+    height: 100
+};
+var gameBall = {
+    x: 250,
+    y: 100,
+    radius: 15,
+    dy: 0,
+    dx: 3
+};
 var scores = {
     leftPlayerScore: 0,
     rightPlayerScore: 0
@@ -20,8 +32,8 @@ function main() {
         clearCanvas();
         checkIfBounced();
         checkIfScored();
-        ballX += dx;
-        ballY += dy;
+        gameBall.x += gameBall.dx;
+        gameBall.y += gameBall.dy;
         draw();
         main();
     }, 20);
@@ -38,12 +50,12 @@ var clearCanvas = function () {
 var draw = function () {
     gameBoardContext.fillStyle = 'lightblue';
     gameBoardContext.strokeStyle = 'darkblue';
-    gameBoardContext.fillRect.apply(gameBoardContext, leftBlock);
-    gameBoardContext.strokeRect.apply(gameBoardContext, leftBlock);
-    gameBoardContext.fillRect.apply(gameBoardContext, rightBlock);
-    gameBoardContext.strokeRect.apply(gameBoardContext, rightBlock);
+    gameBoardContext.fillRect(leftBlock.x, leftBlock.y, leftBlock.width, leftBlock.height);
+    gameBoardContext.strokeRect(leftBlock.x, leftBlock.y, leftBlock.width, leftBlock.height);
+    gameBoardContext.fillRect(rightBlock.x, rightBlock.y, rightBlock.width, rightBlock.height);
+    gameBoardContext.strokeRect(rightBlock.x, rightBlock.y, rightBlock.width, rightBlock.height);
     gameBoardContext.beginPath();
-    gameBoardContext.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    gameBoardContext.arc(gameBall.x, gameBall.y, gameBall.radius, 0, 2 * Math.PI);
     gameBoardContext.stroke();
 };
 var changeDirection = function (e) {
@@ -52,24 +64,24 @@ var changeDirection = function (e) {
     var W_KEY = 87;
     var S_KEY = 83;
     var keyPressed = e.keyCode;
-    if (keyPressed === UP_KEY && rightBlock[1] > 0) {
-        rightBlock[1] -= 20;
+    if (keyPressed === UP_KEY && rightBlock.y > 0) {
+        rightBlock.y -= 20;
     }
-    else if (keyPressed === DOWN_KEY && rightBlock[1] < 300) {
-        rightBlock[1] += 20;
+    else if (keyPressed === DOWN_KEY && rightBlock.y < (400 - rightBlock.height)) {
+        rightBlock.y += 20;
     }
-    else if (keyPressed === W_KEY && leftBlock[1] > 0) {
-        leftBlock[1] -= 20;
+    else if (keyPressed === W_KEY && leftBlock.y > 0) {
+        leftBlock.y -= 20;
     }
-    else if (keyPressed === S_KEY && leftBlock[1] < 300) {
-        leftBlock[1] += 20;
+    else if (keyPressed === S_KEY && leftBlock.y < (400 - leftBlock.height)) {
+        leftBlock.y += 20;
     }
     clearCanvas();
     draw();
 };
 var checkIfHitLeftBlock = function () {
-    if (((ballX - ballRadius) <= (leftBlock[0] + leftBlock[2]) && (ballX - ballRadius) >= (leftBlock[0]))
-        && ((ballY + ballRadius) > leftBlock[1] && (ballY - ballRadius) < (leftBlock[1] + 100))) {
+    if (((gameBall.x - gameBall.radius) <= (leftBlock.x + leftBlock.width) && (gameBall.x - gameBall.radius) >= (leftBlock.x))
+        && ((gameBall.y + gameBall.radius) > leftBlock.y && (gameBall.y - gameBall.radius) < (leftBlock.y + 100))) {
         return true;
     }
     else {
@@ -77,8 +89,8 @@ var checkIfHitLeftBlock = function () {
     }
 };
 var checkIfHitRightBlock = function () {
-    if ((((ballX + ballRadius) >= rightBlock[0]) && ((ballX + ballRadius) <= (rightBlock[0] + rightBlock[2])))
-        && ((ballY + ballRadius) > rightBlock[1] && (ballY - ballRadius) < (rightBlock[1] + 100))) {
+    if ((((gameBall.x + gameBall.radius) >= rightBlock.x) && ((gameBall.x + gameBall.radius) <= (rightBlock.x + rightBlock.width)))
+        && ((gameBall.y + gameBall.radius) > rightBlock.y && (gameBall.y - gameBall.radius) < (rightBlock.y + 100))) {
         return true;
     }
     else {
@@ -86,7 +98,7 @@ var checkIfHitRightBlock = function () {
     }
 };
 var checkIfHitWall = function () {
-    if (((ballY - ballRadius) < 1) || ((ballY + ballRadius) > 400)) {
+    if (((gameBall.y - gameBall.radius) < 1) || ((gameBall.y + gameBall.radius) > 400)) {
         return true;
     }
     else {
@@ -95,25 +107,25 @@ var checkIfHitWall = function () {
 };
 var checkIfBounced = function () {
     if (checkIfHitRightBlock()) {
-        dx = -1 * dx;
+        gameBall.dx = -1 * gameBall.dx;
         if (Math.floor(Math.random())) {
-            dy += Math.floor(Math.random() * 3);
+            gameBall.dy += Math.floor(Math.random() * 3);
         }
         else {
-            dy -= Math.floor(Math.random() * 3);
+            gameBall.dy -= Math.floor(Math.random() * 3);
         }
     }
     else if (checkIfHitLeftBlock()) {
-        dx = -1 * dx;
+        gameBall.dx = -1 * gameBall.dx;
         if (Math.floor(Math.random())) {
-            dy += Math.floor(Math.random() * 3);
+            gameBall.dy += Math.floor(Math.random() * 3);
         }
         else {
-            dy -= Math.floor(Math.random() * 3);
+            gameBall.dy -= Math.floor(Math.random() * 3);
         }
     }
     else if (checkIfHitWall()) {
-        dy = -1 * dy;
+        gameBall.dy = -1 * gameBall.dy;
     }
 };
 var updateScore = function (side) {
@@ -125,19 +137,19 @@ var updateScore = function (side) {
     }
 };
 var checkIfScored = function () {
-    if ((ballX - ballRadius) <= 0) {
+    if ((gameBall.x - gameBall.radius) <= 0) {
         scores.leftPlayerScore++;
         updateScore('left');
-        ballX = 250;
-        dx = -1 * dx;
-        dy = 0;
+        gameBall.x = 250;
+        gameBall.dx = -1 * gameBall.dx;
+        gameBall.dy = 0;
     }
-    else if ((ballX + ballRadius) >= 600) {
+    else if ((gameBall.x + gameBall.radius) >= 600) {
         scores.rightPlayerScore++;
         updateScore('right');
-        ballX = 250;
-        dx = -1 * dx;
-        dy = 0;
+        gameBall.x = 250;
+        gameBall.dx = -1 * gameBall.dx;
+        gameBall.dy = 0;
     }
 };
 document.addEventListener("keydown", changeDirection);
