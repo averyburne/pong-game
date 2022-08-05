@@ -9,14 +9,16 @@ let leftBlock = {
     x: 100,
     y: 100,
     width: 20,
-    height: 100
+    height: 100,
+    incoming: false
 }
 
 let rightBlock = {
     x: 400,
     y: 100,
     width: 20,
-    height: 100
+    height: 100,
+    incoming: true
 }
 
 let gameBall = {
@@ -36,7 +38,11 @@ function main(): void {
     setTimeout(() => {
         clearCanvas()
         checkIfBounced()
-        checkIfScored()
+        if(checkIfScored()) {
+            setTimeout(() => {
+                draw()
+            }, 3000)
+        }
         gameBall.x += gameBall.dx
         gameBall.y += gameBall.dy
         draw()
@@ -151,20 +157,23 @@ const updateScore = side => {
     }
 }
 
-const checkIfScored = (): void => {
+const checkIfScored = (): boolean => {
     if ((gameBall.x - gameBall.radius) <= 0) {
         scores.leftPlayerScore++
         updateScore('left')
         gameBall.x = 250
         gameBall.dx = -1*gameBall.dx
         gameBall.dy = 0
+        return true
     } else if ((gameBall.x + gameBall.radius) >= 600) {
         scores.rightPlayerScore++
         updateScore('right')
         gameBall.x = 250
         gameBall.dx = -1*gameBall.dx
         gameBall.dy = 0
+        return true
     }
+    return false
 }
 
 document.addEventListener("keydown", changeDirection)

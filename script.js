@@ -8,13 +8,15 @@ var leftBlock = {
     x: 100,
     y: 100,
     width: 20,
-    height: 100
+    height: 100,
+    incoming: false
 };
 var rightBlock = {
     x: 400,
     y: 100,
     width: 20,
-    height: 100
+    height: 100,
+    incoming: true
 };
 var gameBall = {
     x: 250,
@@ -31,7 +33,11 @@ function main() {
     setTimeout(function () {
         clearCanvas();
         checkIfBounced();
-        checkIfScored();
+        if (checkIfScored()) {
+            setTimeout(function () {
+                draw();
+            }, 3000);
+        }
         gameBall.x += gameBall.dx;
         gameBall.y += gameBall.dy;
         draw();
@@ -143,6 +149,7 @@ var checkIfScored = function () {
         gameBall.x = 250;
         gameBall.dx = -1 * gameBall.dx;
         gameBall.dy = 0;
+        return true;
     }
     else if ((gameBall.x + gameBall.radius) >= 600) {
         scores.rightPlayerScore++;
@@ -150,6 +157,8 @@ var checkIfScored = function () {
         gameBall.x = 250;
         gameBall.dx = -1 * gameBall.dx;
         gameBall.dy = 0;
+        return true;
     }
+    return false;
 };
 document.addEventListener("keydown", changeDirection);
