@@ -112,7 +112,7 @@ var checkIfHitWall = function () {
     }
 };
 var checkIfBounced = function () {
-    if (checkIfHitRightBlock()) {
+    if (rightBlock.incoming && checkIfHitRightBlock()) {
         gameBall.dx = -1 * gameBall.dx;
         if (Math.floor(Math.random())) {
             gameBall.dy += Math.floor(Math.random() * 3);
@@ -120,8 +120,10 @@ var checkIfBounced = function () {
         else {
             gameBall.dy -= Math.floor(Math.random() * 3);
         }
+        rightBlock.incoming = false;
+        leftBlock.incoming = true;
     }
-    else if (checkIfHitLeftBlock()) {
+    else if (leftBlock.incoming && checkIfHitLeftBlock()) {
         gameBall.dx = -1 * gameBall.dx;
         if (Math.floor(Math.random())) {
             gameBall.dy += Math.floor(Math.random() * 3);
@@ -129,6 +131,8 @@ var checkIfBounced = function () {
         else {
             gameBall.dy -= Math.floor(Math.random() * 3);
         }
+        leftBlock.incoming = false;
+        rightBlock.incoming = true;
     }
     else if (checkIfHitWall()) {
         gameBall.dy = -1 * gameBall.dy;

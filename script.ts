@@ -127,7 +127,7 @@ const checkIfHitWall = (): boolean => {
 }
 
 const checkIfBounced = (): void => {
-    if (checkIfHitRightBlock()) {
+    if (rightBlock.incoming && checkIfHitRightBlock()) {
         gameBall.dx = -1*gameBall.dx
         if (Math.floor(Math.random())) {
             gameBall.dy += Math.floor(Math.random() * 3)
@@ -135,7 +135,9 @@ const checkIfBounced = (): void => {
         else {
             gameBall.dy -= Math.floor(Math.random() * 3)
         }
-    } else if (checkIfHitLeftBlock()) {
+        rightBlock.incoming = false
+        leftBlock.incoming = true
+    } else if (leftBlock.incoming && checkIfHitLeftBlock()) {
         gameBall.dx = -1*gameBall.dx
         if (Math.floor(Math.random())) {
             gameBall.dy += Math.floor(Math.random() * 3)
@@ -143,6 +145,8 @@ const checkIfBounced = (): void => {
         else {
             gameBall.dy -= Math.floor(Math.random() * 3)
         }
+        leftBlock.incoming = false
+        rightBlock.incoming = true
     } else if (checkIfHitWall()) {
         gameBall.dy = -1*gameBall.dy
     }
