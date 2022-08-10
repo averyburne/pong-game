@@ -23,7 +23,7 @@ var gameBall = {
     y: 100,
     radius: 15,
     dy: 0,
-    dx: 3
+    dx: 2
 };
 var scores = {
     leftPlayerScore: 0,
@@ -42,7 +42,7 @@ function main() {
         gameBall.y += gameBall.dy;
         draw();
         main();
-    }, 20);
+    }, 10);
 }
 var clearCanvas = function () {
     gameBoardContext.fillStyle = boardBackground;
@@ -111,26 +111,32 @@ var checkIfHitWall = function () {
         return false;
     }
 };
+// const findBlockSection() {
+// }
 var checkIfBounced = function () {
     if (rightBlock.incoming && checkIfHitRightBlock()) {
         gameBall.dx = -1 * gameBall.dx;
-        if (Math.floor(Math.random())) {
-            gameBall.dy += Math.floor(Math.random() * 3);
-        }
-        else {
-            gameBall.dy -= Math.floor(Math.random() * 3);
-        }
+        // if (Math.floor(Math.random())) {
+        //     gameBall.dy += Math.floor(Math.random() * 3)
+        // }
+        // else {
+        //     gameBall.dy -= Math.floor(Math.random() * 3)
+        // }
+        var dyChange = (rightBlock.y - gameBall.y) + (rightBlock.height / 2);
+        gameBall.dy = -1 * (dyChange / 25);
         rightBlock.incoming = false;
         leftBlock.incoming = true;
     }
     else if (leftBlock.incoming && checkIfHitLeftBlock()) {
         gameBall.dx = -1 * gameBall.dx;
-        if (Math.floor(Math.random())) {
-            gameBall.dy += Math.floor(Math.random() * 3);
-        }
-        else {
-            gameBall.dy -= Math.floor(Math.random() * 3);
-        }
+        // if (Math.floor(Math.random())) {
+        //     gameBall.dy += Math.floor(Math.random() * 3)
+        // }
+        // else {
+        //     gameBall.dy -= Math.floor(Math.random() * 3)
+        // }
+        var dyChange = (leftBlock.y - gameBall.y) + (leftBlock.height / 2);
+        gameBall.dy = -1 * (dyChange / 25);
         leftBlock.incoming = false;
         rightBlock.incoming = true;
     }
@@ -148,19 +154,23 @@ var updateScore = function (side) {
 };
 var checkIfScored = function () {
     if ((gameBall.x - gameBall.radius) <= 0) {
-        scores.leftPlayerScore++;
-        updateScore('left');
-        gameBall.x = 250;
-        gameBall.dx = -1 * gameBall.dx;
-        gameBall.dy = 0;
-        return true;
-    }
-    else if ((gameBall.x + gameBall.radius) >= 600) {
         scores.rightPlayerScore++;
         updateScore('right');
         gameBall.x = 250;
         gameBall.dx = -1 * gameBall.dx;
         gameBall.dy = 0;
+        leftBlock.incoming = false;
+        rightBlock.incoming = true;
+        return true;
+    }
+    else if ((gameBall.x + gameBall.radius) >= 600) {
+        scores.leftPlayerScore++;
+        updateScore('left');
+        gameBall.x = 250;
+        gameBall.dx = -1 * gameBall.dx;
+        gameBall.dy = 0;
+        rightBlock.incoming = false;
+        leftBlock.incoming = true;
         return true;
     }
     return false;
