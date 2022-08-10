@@ -34,6 +34,11 @@ let scores = {
     rightPlayerScore: 0
 }
 
+window.onload = function() {
+    clearCanvas()
+    draw()
+  }
+
 function main(): void {
     setTimeout(() => {
         clearCanvas()

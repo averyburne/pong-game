@@ -29,6 +29,10 @@ var scores = {
     leftPlayerScore: 0,
     rightPlayerScore: 0
 };
+window.onload = function () {
+    clearCanvas();
+    draw();
+};
 function main() {
     setTimeout(function () {
         clearCanvas();
