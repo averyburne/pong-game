@@ -5,6 +5,7 @@ var gameBoardContext = gameBoard.getContext('2d');
 var boardBackground = 'white';
 var boardBorder = 'black';
 var isDragging = false;
+// gameBoard.width = '10%'
 var leftBlock = {
     x: 100,
     y: 100,
@@ -112,7 +113,7 @@ var checkIfHitRightBlock = function () {
     }
 };
 var checkIfHitWall = function () {
-    if (((gameBall.y - gameBall.radius) < 1) || ((gameBall.y + gameBall.radius) > 400)) {
+    if (((gameBall.y - gameBall.radius) < 1) || ((gameBall.y + gameBall.radius) > gameBoard.height)) {
         return true;
     }
     else {
@@ -171,6 +172,9 @@ gameBoard.onmousedown = mouseDown;
 gameBoard.onmousemove = mouseMove;
 var checkIfBounced = function () {
     if (rightBlock.incoming && checkIfHitRightBlock()) {
+        if (gameBall.dx < 10) {
+            gameBall.dx += 0.1;
+        }
         gameBall.dx = -1 * gameBall.dx;
         // if (Math.floor(Math.random())) {
         //     gameBall.dy += Math.floor(Math.random() * 3)
@@ -184,6 +188,9 @@ var checkIfBounced = function () {
         leftBlock.incoming = true;
     }
     else if (leftBlock.incoming && checkIfHitLeftBlock()) {
+        if (gameBall.dx > -10) {
+            gameBall.dx -= 0.1;
+        }
         gameBall.dx = -1 * gameBall.dx;
         // if (Math.floor(Math.random())) {
         //     gameBall.dy += Math.floor(Math.random() * 3)
@@ -219,7 +226,7 @@ var checkIfScored = function () {
         rightBlock.incoming = true;
         return true;
     }
-    else if ((gameBall.x + gameBall.radius) >= 600) {
+    else if ((gameBall.x + gameBall.radius) >= gameBoard.width) {
         scores.leftPlayerScore++;
         updateScore('left');
         gameBall.x = 250;

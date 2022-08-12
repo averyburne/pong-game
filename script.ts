@@ -5,6 +5,7 @@ const gameBoardContext = gameBoard.getContext('2d')
 const boardBackground: string = 'white'
 const boardBorder: string = 'black'
 let isDragging: boolean = false
+// gameBoard.width = '10%'
 
 let leftBlock = {
     x: 100,
@@ -128,7 +129,7 @@ const checkIfHitRightBlock = (): boolean => {
 }
 
 const checkIfHitWall = (): boolean => {
-    if (((gameBall.y - gameBall.radius) < 1) || ((gameBall.y + gameBall.radius) > 400)) {
+    if (((gameBall.y - gameBall.radius) < 1) || ((gameBall.y + gameBall.radius) > gameBoard.height)) {
         return true
     } else {
         return false
@@ -194,6 +195,9 @@ gameBoard.onmousemove = mouseMove
 
 const checkIfBounced = (): void => {
     if (rightBlock.incoming && checkIfHitRightBlock()) {
+        if (gameBall.dx < 10) {
+            gameBall.dx += 0.1
+        }
         gameBall.dx = -1*gameBall.dx
         // if (Math.floor(Math.random())) {
         //     gameBall.dy += Math.floor(Math.random() * 3)
@@ -206,6 +210,9 @@ const checkIfBounced = (): void => {
         rightBlock.incoming = false
         leftBlock.incoming = true
     } else if (leftBlock.incoming && checkIfHitLeftBlock()) {
+        if (gameBall.dx > -10) {
+            gameBall.dx -= 0.1
+        }
         gameBall.dx = -1*gameBall.dx
         // if (Math.floor(Math.random())) {
         //     gameBall.dy += Math.floor(Math.random() * 3)
@@ -241,7 +248,7 @@ const checkIfScored = (): boolean => {
         leftBlock.incoming = false
         rightBlock.incoming = true
         return true
-    } else if ((gameBall.x + gameBall.radius) >= 600) {
+    } else if ((gameBall.x + gameBall.radius) >= gameBoard.width) {
         scores.leftPlayerScore++
         updateScore('left')
         gameBall.x = 250
