@@ -4,6 +4,7 @@ var gameBoard = document.getElementById("game-canvas");
 var gameBoardContext = gameBoard.getContext('2d');
 var boardBackground = 'white';
 var boardBorder = 'black';
+var isDragging = false;
 var leftBlock = {
     x: 100,
     y: 100,
@@ -117,6 +118,41 @@ var checkIfHitWall = function () {
 };
 // const findBlockSection() {
 // }
+var checkIfInBlock = function (xClick, yClick, block) {
+    var leftSideOfBlock = block.x;
+    var rightSideOfBock = block.x + block.width;
+    var topSideOfBlock = block.y;
+    var bottomSideOfBlock = block.y + block.height;
+    console.log(leftSideOfBlock, rightSideOfBock);
+    if (xClick > leftSideOfBlock && xClick < rightSideOfBock && yClick > topSideOfBlock && yClick < bottomSideOfBlock) {
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+var mouseDown = function (e) {
+    e.preventDefault();
+    var startX = parseInt(e.offsetX);
+    var startY = parseInt(e.offsetY);
+    console.log(startX, startY);
+    console.log(e);
+    if (checkIfInBlock(startX, startY, rightBlock)) {
+        isDragging = true;
+    }
+    else {
+        console.log('out');
+    }
+};
+var mouseMove = function (e) {
+    if (isDragging) {
+        rightBlock.y = e.offsetY;
+        clearCanvas();
+        draw();
+    }
+};
+gameBoard.onmousedown = mouseDown;
+gameBoard.onmousemove = mouseMove;
 var checkIfBounced = function () {
     if (rightBlock.incoming && checkIfHitRightBlock()) {
         gameBall.dx = -1 * gameBall.dx;

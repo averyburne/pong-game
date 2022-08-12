@@ -4,6 +4,7 @@ let gameBoard: any = document.getElementById("game-canvas")
 const gameBoardContext = gameBoard.getContext('2d')
 const boardBackground: string = 'white'
 const boardBorder: string = 'black'
+let isDragging: boolean = false
 
 let leftBlock = {
     x: 100,
@@ -134,6 +135,47 @@ const checkIfHitWall = (): boolean => {
 // const findBlockSection() {
 
 // }
+
+let checkIfInBlock = (xClick, yClick, block) => {
+    let leftSideOfBlock = block.x
+    let rightSideOfBock = block.x + block.width
+    let topSideOfBlock = block.y
+    let bottomSideOfBlock = block.y + block.height
+
+    console.log(leftSideOfBlock, rightSideOfBock)
+
+    if (xClick > leftSideOfBlock && xClick < rightSideOfBock && yClick > topSideOfBlock && yClick < bottomSideOfBlock) {
+        return true
+    } else {
+        return false
+    }
+}
+
+let mouseDown = function(e) {
+    e.preventDefault();
+
+    let startX = parseInt(e.offsetX)
+    let startY = parseInt(e.offsetY)
+    console.log(startX, startY)
+    console.log(e)
+
+    if(checkIfInBlock(startX, startY, rightBlock)) {
+        isDragging = true
+    } else {
+        console.log('out')
+    }
+}
+
+let mouseMove = function(e) {
+    if (isDragging) {
+        rightBlock.y = e.offsetY
+        clearCanvas()
+        draw()
+    }
+}
+
+gameBoard.onmousedown = mouseDown
+gameBoard.onmousemove = mouseMove
 
 const checkIfBounced = (): void => {
     if (rightBlock.incoming && checkIfHitRightBlock()) {
