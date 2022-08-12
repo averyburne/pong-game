@@ -22,7 +22,7 @@ var rightBlock = {
 var gameBall = {
     x: 250,
     y: 100,
-    radius: 15,
+    radius: 10,
     dy: 0,
     dx: 2
 };
@@ -42,6 +42,9 @@ function main() {
             setTimeout(function () {
                 draw();
             }, 3000);
+        }
+        if (isDragging) {
+            computerMove(leftBlock);
         }
         gameBall.x += gameBall.dx;
         gameBall.y += gameBall.dy;
@@ -150,6 +153,19 @@ var mouseMove = function (e) {
         clearCanvas();
         draw();
     }
+};
+var computerMove = function (block) {
+    if (gameBall.y > block.y) {
+        block.y++;
+    }
+    else if (gameBall.y < block.y) {
+        block.y--;
+    }
+    else {
+        return;
+    }
+    clearCanvas();
+    draw();
 };
 gameBoard.onmousedown = mouseDown;
 gameBoard.onmousemove = mouseMove;
