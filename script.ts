@@ -199,12 +199,6 @@ const checkIfBounced = (): void => {
             gameBall.dx += 0.1
         }
         gameBall.dx = -1*gameBall.dx
-        // if (Math.floor(Math.random())) {
-        //     gameBall.dy += Math.floor(Math.random() * 3)
-        // }
-        // else {
-        //     gameBall.dy -= Math.floor(Math.random() * 3)
-        // }
         let dyChange = (rightBlock.y - gameBall.y) + (rightBlock.height/2)
         gameBall.dy = -1*(dyChange/25)
         rightBlock.incoming = false
@@ -214,12 +208,6 @@ const checkIfBounced = (): void => {
             gameBall.dx -= 0.1
         }
         gameBall.dx = -1*gameBall.dx
-        // if (Math.floor(Math.random())) {
-        //     gameBall.dy += Math.floor(Math.random() * 3)
-        // }
-        // else {
-        //     gameBall.dy -= Math.floor(Math.random() * 3)
-        // }
         let dyChange = (leftBlock.y - gameBall.y) + (leftBlock.height/2)
         gameBall.dy = -1*(dyChange/25)
         leftBlock.incoming = false
@@ -243,7 +231,7 @@ const checkIfScored = (): boolean => {
         scores.rightPlayerScore++
         updateScore('right')
         gameBall.x = 250
-        gameBall.dx = -1*gameBall.dx
+        gameBall.dx = 2
         gameBall.dy = 0
         leftBlock.incoming = false
         rightBlock.incoming = true
@@ -252,7 +240,7 @@ const checkIfScored = (): boolean => {
         scores.leftPlayerScore++
         updateScore('left')
         gameBall.x = 250
-        gameBall.dx = -1*gameBall.dx
+        gameBall.dx = -2
         gameBall.dy = 0
         rightBlock.incoming = false
         leftBlock.incoming = true
