@@ -156,10 +156,10 @@ var mouseMove = function (e) {
     }
 };
 var computerMove = function (block) {
-    if (gameBall.y > block.y) {
+    if (gameBall.y > block.y && block.y < (gameBoard.height - block.height)) {
         block.y++;
     }
-    else if (gameBall.y < block.y) {
+    else if (gameBall.y < block.y && block.y > 0) {
         block.y--;
     }
     else {
