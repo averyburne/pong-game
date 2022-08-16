@@ -7,7 +7,21 @@ const boardBorder: string = 'black'
 let isDragging: boolean = false
 // gameBoard.width = '10%'
 
-let leftBlock = {
+let Block: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    incoming: boolean
+}
+
+let leftBlock: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    incoming: boolean
+} = {
     x: 100,
     y: 100,
     width: 20,
@@ -15,7 +29,13 @@ let leftBlock = {
     incoming: false
 }
 
-let rightBlock = {
+let rightBlock: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    incoming: boolean
+} = {
     x: 400,
     y: 100,
     width: 20,
@@ -23,7 +43,13 @@ let rightBlock = {
     incoming: true
 }
 
-let gameBall = {
+let gameBall: {
+    x: number,
+    y: number,
+    radius: number,
+    dy: number,
+    dx: number
+} = {
     x: 250,
     y: 100,
     radius: 10,
@@ -31,7 +57,10 @@ let gameBall = {
     dx: 2
 }
 
-let scores = {
+let scores: {
+    leftPlayerScore: number,
+    rightPlayerScore: number
+} = {
     leftPlayerScore: 0,
     rightPlayerScore: 0
 }

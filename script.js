@@ -6,6 +6,7 @@ var boardBackground = 'white';
 var boardBorder = 'black';
 var isDragging = false;
 // gameBoard.width = '10%'
+var Block;
 var leftBlock = {
     x: 100,
     y: 100,
