@@ -5,6 +5,8 @@ const gameBoardContext = gameBoard.getContext('2d')
 const boardBackground: string = 'white'
 const boardBorder: string = 'black'
 let isDragging: boolean = false
+let playerBlock
+let computerBlock
 // gameBoard.width = '10%'
 
 let Block: {
@@ -80,7 +82,7 @@ function main(): void {
             }, 3000)
         }
         if(isDragging) {
-            computerMove(leftBlock)
+            computerMove(computerBlock)
         }
         gameBall.x += gameBall.dx
         gameBall.y += gameBall.dy
@@ -194,14 +196,18 @@ let mouseDown = function(e) {
 
     if(checkIfInBlock(startX, startY, rightBlock)) {
         isDragging = true
-    } else {
-        console.log('out')
+        playerBlock = rightBlock
+        computerBlock = leftBlock
+    } else if (checkIfInBlock(startX, startY, leftBlock)) {
+        isDragging = true
+        playerBlock = leftBlock
+        computerBlock = rightBlock
     }
 }
 
 let mouseMove = function(e) {
     if (isDragging) {
-        rightBlock.y = e.offsetY
+        playerBlock.y = e.offsetY
         clearCanvas()
         draw()
     }

@@ -5,6 +5,8 @@ var gameBoardContext = gameBoard.getContext('2d');
 var boardBackground = 'white';
 var boardBorder = 'black';
 var isDragging = false;
+var playerBlock;
+var computerBlock;
 // gameBoard.width = '10%'
 var Block;
 var leftBlock = {
@@ -46,7 +48,7 @@ function main() {
             }, 3000);
         }
         if (isDragging) {
-            computerMove(leftBlock);
+            computerMove(computerBlock);
         }
         gameBall.x += gameBall.dx;
         gameBall.y += gameBall.dy;
@@ -144,14 +146,18 @@ var mouseDown = function (e) {
     console.log(e);
     if (checkIfInBlock(startX, startY, rightBlock)) {
         isDragging = true;
+        playerBlock = rightBlock;
+        computerBlock = leftBlock;
     }
-    else {
-        console.log('out');
+    else if (checkIfInBlock(startX, startY, leftBlock)) {
+        isDragging = true;
+        playerBlock = leftBlock;
+        computerBlock = rightBlock;
     }
 };
 var mouseMove = function (e) {
     if (isDragging) {
-        rightBlock.y = e.offsetY;
+        playerBlock.y = e.offsetY;
         clearCanvas();
         draw();
     }
