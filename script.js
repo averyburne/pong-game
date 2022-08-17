@@ -8,15 +8,15 @@ var isDragging = false;
 // gameBoard.width = '10%'
 var Block;
 var leftBlock = {
-    x: 100,
-    y: 100,
+    x: 50,
+    y: 200,
     width: 20,
     height: 100,
     incoming: false
 };
 var rightBlock = {
-    x: 400,
-    y: 100,
+    x: 750,
+    y: 200,
     width: 20,
     height: 100,
     incoming: true
