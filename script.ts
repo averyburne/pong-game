@@ -171,7 +171,7 @@ const checkIfHitWall = (): boolean => {
 
 // }
 
-let checkIfInBlock = (xClick, yClick, block) => {
+let checkIfInBlock = (xClick, yClick, block): boolean => {
     let leftSideOfBlock = block.x
     let rightSideOfBock = block.x + block.width
     let topSideOfBlock = block.y
@@ -198,10 +198,12 @@ let mouseDown = function(e) {
         isDragging = true
         playerBlock = rightBlock
         computerBlock = leftBlock
+        main()
     } else if (checkIfInBlock(startX, startY, leftBlock)) {
         isDragging = true
         playerBlock = leftBlock
         computerBlock = rightBlock
+        main()
     }
 }
 
@@ -215,9 +217,9 @@ let mouseMove = function(e) {
 
 const computerMove = (block): void => {
     if(gameBall.y > block.y && block.y < (gameBoard.height - block.height)) {
-        block.y++
+        block.y += 2
     } else if (gameBall.y < block.y && block.y > 0) {
-        block.y--
+        block.y -= 2
     } else {
         return
     }
@@ -253,7 +255,7 @@ const checkIfBounced = (): void => {
 
 }
 
-const updateScore = side => {
+const updateScore = (side): void => {
     if (side === 'left') {
         document.getElementById('left-player-score').innerText = scores.leftPlayerScore.toString()
     } else if (side === 'right') {

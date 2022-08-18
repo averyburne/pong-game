@@ -148,11 +148,13 @@ var mouseDown = function (e) {
         isDragging = true;
         playerBlock = rightBlock;
         computerBlock = leftBlock;
+        main();
     }
     else if (checkIfInBlock(startX, startY, leftBlock)) {
         isDragging = true;
         playerBlock = leftBlock;
         computerBlock = rightBlock;
+        main();
     }
 };
 var mouseMove = function (e) {
@@ -164,10 +166,10 @@ var mouseMove = function (e) {
 };
 var computerMove = function (block) {
     if (gameBall.y > block.y && block.y < (gameBoard.height - block.height)) {
-        block.y++;
+        block.y += 2;
     }
     else if (gameBall.y < block.y && block.y > 0) {
-        block.y--;
+        block.y -= 2;
     }
     else {
         return;
